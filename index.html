@@ -16,19 +16,20 @@
       margin: 0;
     }
 
-    button {
+    a.button-link {
       background: #2563eb;
       color: white;
-      border: none;
+      text-decoration: none;
       padding: 14px 24px;
       font-size: 1.1rem;
       border-radius: 10px;
       cursor: pointer;
       box-shadow: 0 4px 14px rgba(37,99,235,0.3);
       transition: all 0.2s ease;
+      display: inline-block;
     }
 
-    button:active {
+    a.button-link:active {
       transform: scale(0.96);
     }
 
@@ -42,7 +43,10 @@
 </head>
 <body>
 
-  <button id="btnImportar">📷 Importar foto</button>
+  <!-- Botão que funciona como link e botão de toque -->
+  <a href="https://seu-servidor.com:355" class="button-link" id="btnImportar">📷 Importar foto</a>
+
+  <!-- Input para importar a foto -->
   <input type="file" id="inputImagem" accept="image/*" style="display:none" capture="environment">
   <img id="preview" alt="Pré-visualização" style="display:none">
 
@@ -51,22 +55,23 @@
     const input = document.getElementById('inputImagem');
     const preview = document.getElementById('preview');
 
-    // Ao tocar no botão, abrimos o seletor de imagem
-    botao.addEventListener('click', () => {
+    // Ao tocar, abrir o seletor de arquivo em vez de navegar (opcional)
+    botao.addEventListener('click', (e) => {
+      e.preventDefault(); // previne ir para o link diretamente
       input.click();
     });
 
-    // Quando o usuário escolhe ou tira uma foto
+    // Pré-visualização da imagem
     input.addEventListener('change', () => {
       const arquivo = input.files[0];
       if (!arquivo) return;
 
-      // Cria URL temporária da imagem
       const urlImagem = URL.createObjectURL(arquivo);
-
-      // Mostra a pré-visualização
       preview.src = urlImagem;
       preview.style.display = 'block';
+
+      // Opcional: abrir outra tela com a imagem
+      // window.open(urlImagem, '_blank');
     });
   </script>
 
